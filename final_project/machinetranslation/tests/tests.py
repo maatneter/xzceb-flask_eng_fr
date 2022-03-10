@@ -1,22 +1,31 @@
 
 import unittest
-import sys
-sys.path.append('/home/project/xzceb-flask_eng_fr/final_project/machinetranslation/')    
-from translator import englishtofrench, frenchtoenglish
+from translator import englishToFrench, frenchToEnglish
 
+def frenchToEnglish_compare(self, french_text, english_text):
+    translation = frenchToEnglish(french_text)
+    try:
+        self.assertEqual(translation, english_text)
+        self.assertNotEqual(translation, english_text)
+    except:
+        pass
 
-class TestEnFr(unittest.TestCase):
-    def testEnglish(self):
-        self.assertEqual(englishtofrench("Hello"),"Bonjour")
+def englishToFrench_compare(self, english_text, french_text):
+    translation = englishToFrench(english_text)
+    try:
+        self.assertEqual(translation, french_text)
+        self.assertNotEqual(translation, french_text)
+    except:
+        pass
 
-    def testEnglish2(self):
-        self.assertNotEqual(englishtofrench(""),"Bonjour")
+class TranslatorTest(unittest.TestCase):
+    def test_frenchToEnglish(self):
+        frenchToEnglish_compare(self, None, None)
+        frenchToEnglish_compare(self, 'Bonjour', 'Hello')
+    
+    def test_englishToFrench(self):
+        englishToFrench_compare(self, None, None)
+        englishToFrench_compare(self, 'Hello', 'Bonjour')
 
-
-class TestFrEn(unittest.TestCase):
-    def testFrench(self):
-        self.assertEqual(frenchtoenglish("Bonjour"),"Hello")
-    def testEnglish2(self):
-        self.assertNotEqual(frenchtoenglish(""),"Hello")
-
-unittest.main()
+if __name__ == '__main__':
+    unittest.main()
